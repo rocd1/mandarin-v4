@@ -1,0 +1,25 @@
+<header class="app-header">
+  <button
+    type="button"
+    class="icon-button"
+    [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+    [attr.aria-expanded]="menuOpen()"
+    (click)="toggleMenu()"
+  >
+    {{ menuOpen() ? '✕' : '☰' }}
+  </button>
+
+  <span class="app-title">
+    {{ title() }}
+  </span>
+
+  <button
+    type="button"
+    class="icon-button"
+    aria-label="Search"
+    (click)="searchClicked()"
+  >
+    🔍
+  </button>
+</header>
+

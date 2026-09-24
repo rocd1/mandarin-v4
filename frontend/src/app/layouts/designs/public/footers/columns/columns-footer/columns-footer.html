@@ -1,0 +1,129 @@
+<footer class="site-footer">
+
+  <div class="footer-content">
+
+    <div class="footer-brand">
+      <a
+        routerLink="/"
+        aria-label="Go to home"
+      >
+        {{ brand() }}
+      </a>
+
+      <p>
+        A reusable application starter for building
+        modern web applications.
+      </p>
+    </div>
+
+    <nav
+      class="footer-column"
+      aria-labelledby="footer-product"
+    >
+      <h2 id="footer-product">
+        Product
+      </h2>
+
+      <a
+        routerLink="/"
+        fragment="explore"
+      >
+        Explore
+      </a>
+
+      <a
+        routerLink="/"
+        fragment="pricing"
+      >
+        Pricing
+      </a>
+
+      <a
+        routerLink="/"
+        fragment="features"
+      >
+        Features
+      </a>
+    </nav>
+
+    <nav
+      class="footer-column"
+      aria-labelledby="footer-company"
+    >
+      <h2 id="footer-company">
+        Company
+      </h2>
+
+      <a routerLink="/">
+        About
+      </a>
+
+      <a routerLink="/">
+        Contact
+      </a>
+
+      <a routerLink="/">
+        Community
+      </a>
+    </nav>
+
+    <nav
+      class="footer-column"
+      aria-labelledby="footer-legal"
+    >
+      <h2 id="footer-legal">
+        Legal
+      </h2>
+
+      <a
+        routerLink="/"
+        fragment="privacy"
+      >
+        Privacy
+      </a>
+
+      <a
+        routerLink="/"
+        fragment="terms"
+      >
+        Terms
+      </a>
+
+      <a
+        routerLink="/"
+        fragment="cookies"
+      >
+        Cookies
+      </a>
+    </nav>
+
+  </div>
+
+  <div class="footer-bottom">
+
+    <p class="copyright">
+      © {{ year() }} {{ brand() }}
+    </p>
+
+    <nav
+      class="footer-bottom-navigation"
+      aria-label="Footer legal navigation"
+    >
+      <a
+        routerLink="/"
+        fragment="privacy"
+      >
+        Privacy
+      </a>
+
+      <a
+        routerLink="/"
+        fragment="terms"
+      >
+        Terms
+      </a>
+    </nav>
+
+  </div>
+
+</footer>

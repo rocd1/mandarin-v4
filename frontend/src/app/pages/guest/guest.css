@@ -1,0 +1,134 @@
+.guest-page {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   GUEST CARD
+   ============================================================ */
+
+.guest-card {
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ============================================================
+   BACK LINK
+   ============================================================ */
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 2rem;
+
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.7;
+
+  transition: opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 1;
+}
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+
+.content {
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+
+  opacity: 0.6;
+}
+
+h1 {
+  margin: 0.75rem 0;
+
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.content p:not(.eyebrow):not(.note) {
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.note {
+  margin-top: 1.5rem;
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  opacity: 0.6;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  margin-top: 2rem;
+}
+
+.actions button {
+  width: min(100%, 280px);
+
+  padding: 0.9rem;
+
+  border: 0;
+  border-radius: 0.4rem;
+
+  background: #111;
+  color: #fff;
+
+  font: inherit;
+  font-weight: 600;
+
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.actions a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.actions a:hover {
+  color: #2563eb;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .guest-page {
+    padding: 1.5rem 0;
+  }
+
+  .guest-card {
+    max-width: none;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+}

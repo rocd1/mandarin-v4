@@ -1,0 +1,41 @@
+<header class="site-header">
+
+  <a
+    routerLink="/"
+    class="brand"
+    aria-label="Go to home"
+  >
+    {{ brand() }}
+  </a>
+
+  <nav
+    class="primary-navigation"
+    aria-label="Primary navigation"
+  >
+    <a routerLink="/">
+      Home
+    </a>
+
+    <a
+      routerLink="/"
+      fragment="contact"
+    >
+      Contact
+    </a>
+
+    <a
+      routerLink="/"
+      fragment="pricing"
+    >
+      Pricing
+    </a>
+
+    <a
+      routerLink="/login"
+      class="sign-in"
+    >
+      Sign In
+    </a>
+  </nav>
+
+</header>

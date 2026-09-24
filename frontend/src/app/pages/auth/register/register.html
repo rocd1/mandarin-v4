@@ -1,0 +1,177 @@
+<main class="auth-page">
+  <section class="auth-card">
+    <a routerLink="/" class="back-link">
+      ← Back to home
+    </a>
+
+    <div class="heading">
+      <p class="eyebrow">PROJECT APP STARTER</p>
+
+      <h1>Create account</h1>
+
+      <p>Create an account to get started.</p>
+    </div>
+
+    @if (requestState(); as state) {
+      @if (state.status === 'error' && state.error.message) {
+        <div class="error-message" role="alert">
+          {{ state.error.message }}
+        </div>
+      }
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <div class="field">
+        <label for="username">Username</label>
+
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+        />
+
+        @if (
+          registerForm.controls.username.touched &&
+          registerForm.controls.username.hasError('required')
+        ) {
+          <small>Username is required.</small>
+        }
+
+        @if (
+          registerForm.controls.username.hasError('server')
+        ) {
+          <small>
+            {{ registerForm.controls.username.getError('server') }}
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+        />
+
+        @if (
+          registerForm.controls.email.touched &&
+          registerForm.controls.email.hasError('required')
+        ) {
+          <small>Email is required.</small>
+        }
+
+        @if (
+          registerForm.controls.email.touched &&
+          registerForm.controls.email.hasError('email')
+        ) {
+          <small>Enter a valid email address.</small>
+        }
+
+        @if (
+          registerForm.controls.email.hasError('server')
+        ) {
+          <small>
+            {{ registerForm.controls.email.getError('server') }}
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+        />
+
+        @if (
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.hasError('required')
+        ) {
+          <small>Password is required.</small>
+        }
+
+        @if (
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.hasError('minlength')
+        ) {
+          <small>Password must be at least 8 characters.</small>
+        }
+
+        @if (
+          registerForm.controls.password.hasError('server')
+        ) {
+          <small>
+            {{ registerForm.controls.password.getError('server') }}
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password_confirm">
+          Confirm password
+        </label>
+
+        <input
+          id="password_confirm"
+          type="password"
+          formControlName="password_confirm"
+          autocomplete="new-password"
+        />
+
+        @if (
+          registerForm.controls.password_confirm.touched &&
+          registerForm.controls.password_confirm.hasError('required')
+        ) {
+          <small>Confirmation password is required.</small>
+        }
+
+        @if (
+          registerForm.touched &&
+          registerForm.hasError('passwordMismatch')
+        ) {
+          <small>Passwords do not match.</small>
+        }
+
+        @if (
+          registerForm.controls.password_confirm.hasError('server')
+        ) {
+          <small>
+            {{
+              registerForm.controls.password_confirm.getError('server')
+            }}
+          </small>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="requestState().status === 'loading'"
+      >
+        {{
+          requestState().status === 'loading'
+            ? 'Creating account...'
+            : 'Create Account'
+        }}
+      </button>
+    </form>
+
+    <div class="links">
+      <p>
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </p>
+
+      <p>
+        <a routerLink="/guest">Continue as Guest</a>
+      </p>
+    </div>
+  </section>
+</main>

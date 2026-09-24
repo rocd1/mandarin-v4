@@ -1,0 +1,88 @@
+.app-layout {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: system-ui, sans-serif;
+
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* ============================================================
+   MENU
+   ============================================================ */
+
+.menu-panel {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  box-sizing: border-box;
+}
+
+.menu-panel a {
+  display: block;
+
+  padding: 0.875rem 1rem;
+
+  color: #1f2937;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  border-bottom: 1px solid #f3f4f6;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.menu-panel a:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+.menu-panel a:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
+.menu-panel a:last-child {
+  border-bottom: 0;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+
+.app-main {
+  flex: 1;
+
+  width: 100%;
+  max-width: 960px;
+
+  margin: 0 auto;
+
+  padding: 2rem;
+
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .app-main {
+    padding: 1rem;
+    padding-bottom: 1.5rem;
+  }
+}

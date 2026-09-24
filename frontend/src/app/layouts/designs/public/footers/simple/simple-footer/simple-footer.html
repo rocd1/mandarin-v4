@@ -1,0 +1,39 @@
+<footer class="site-footer">
+
+  <div class="footer-brand">
+    <a
+      routerLink="/"
+      aria-label="Go to home"
+    >
+      {{ brand() }}
+    </a>
+  </div>
+
+  <p class="copyright">
+    © {{ year() }} {{ brand() }}
+  </p>
+
+  <nav
+    class="footer-navigation"
+    aria-label="Footer navigation"
+  >
+    <a
+      routerLink="/"
+      fragment="privacy"
+    >
+      Privacy
+    </a>
+
+    <a
+      routerLink="/"
+      fragment="terms"
+    >
+      Terms
+    </a>
+
+    <a routerLink="/">
+      Contact
+    </a>
+  </nav>
+
+</footer>

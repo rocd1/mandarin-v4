@@ -1,0 +1,25 @@
+<div class="app-layout">
+  <app-dashboard-header
+    (menuToggle)="toggleMenu()"
+  />
+
+  @if (isMenuOpen()) {
+    <nav
+      class="menu-panel"
+      aria-label="Secondary navigation"
+    >
+      <a routerLink="/app">Settings</a>
+      <a routerLink="/app">Contact Us</a>
+      <a routerLink="/app">Community</a>
+
+      <div class="menu-divider"></div>
+
+      <a routerLink="/app">Logout</a>
+    </nav>
+  }
+
+  <main class="app-main">
+    <router-outlet />
+  </main>
+
+</div>

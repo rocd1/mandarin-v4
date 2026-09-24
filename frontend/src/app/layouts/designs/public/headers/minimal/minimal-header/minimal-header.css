@@ -1,0 +1,117 @@
+.site-header {
+  min-height: 4rem;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  padding: 0.75rem 2rem;
+
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+.brand {
+  justify-self: start;
+
+  color: #1f2937;
+
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.primary-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 2rem;
+}
+
+.primary-navigation a,
+.sign-in {
+  color: #374151;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.primary-navigation a:hover,
+.sign-in:hover,
+.brand:hover {
+  color: #2563eb;
+}
+
+.sign-in {
+  justify-self: end;
+
+  padding: 0.6rem 1rem;
+
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+
+  font-weight: 600;
+
+  background-color: #ffffff;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.sign-in:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.brand:focus-visible,
+.primary-navigation a:focus-visible,
+.sign-in:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+
+    padding: 0.75rem 1rem;
+  }
+
+  .primary-navigation {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    width: 100%;
+
+    padding-top: 0.75rem;
+
+    gap: 1.25rem;
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  .primary-navigation a,
+  .sign-in {
+    font-size: 0.85rem;
+  }
+
+  .sign-in {
+    padding: 0.5rem 0.75rem;
+  }
+}

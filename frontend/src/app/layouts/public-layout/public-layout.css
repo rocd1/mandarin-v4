@@ -1,0 +1,30 @@
+.public-layout {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: system-ui, sans-serif;
+
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.site-main {
+  flex: 1;
+
+  width: 100%;
+  max-width: 960px;
+
+  margin: 0 auto;
+
+  padding: 2rem;
+
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .site-main {
+    padding: 1rem;
+  }
+}

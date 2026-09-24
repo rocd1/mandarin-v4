@@ -1,0 +1,82 @@
+<header class="site-header">
+
+  <button
+    type="button"
+    class="icon-button menu-button"
+    [attr.aria-label]="isMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'"
+    [attr.aria-expanded]="isMenuOpen()"
+    aria-controls="primary-navigation"
+    (click)="toggleMenu()"
+  >
+    {{ isMenuOpen() ? '✕' : '☰' }}
+  </button>
+
+  <a
+    routerLink="/"
+    class="brand"
+    aria-label="Go to home"
+    (click)="closeMenu()"
+  >
+    {{ brand() }}
+  </a>
+
+  <button
+    type="button"
+    class="icon-button search-button"
+    aria-label="Search"
+  >
+    🔍
+  </button>
+
+</header>
+
+@if (isMenuOpen()) {
+  <nav
+    id="primary-navigation"
+    class="navigation-panel"
+    aria-label="Primary navigation"
+  >
+    <a
+      routerLink="/"
+      (click)="closeMenu()"
+    >
+      <span class="navigation-icon" aria-hidden="true">⌂</span>
+      <span>Home</span>
+    </a>
+
+    <a
+      routerLink="/"
+      fragment="explore"
+      (click)="closeMenu()"
+    >
+      <span class="navigation-icon" aria-hidden="true">⌕</span>
+      <span>Explore</span>
+    </a>
+
+    <a
+      routerLink="/"
+      fragment="new"
+      (click)="closeMenu()"
+    >
+      <span class="navigation-icon" aria-hidden="true">＋</span>
+      <span>New</span>
+    </a>
+
+    <a
+      routerLink="/"
+      fragment="pricing"
+      (click)="closeMenu()"
+    >
+      <span class="navigation-icon" aria-hidden="true">◇</span>
+      <span>Pricing</span>
+    </a>
+
+    <a
+      routerLink="/login"
+      (click)="closeMenu()"
+    >
+      <span class="navigation-icon" aria-hidden="true">⇥</span>
+      <span>Login</span>
+    </a>
+  </nav>
+}

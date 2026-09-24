@@ -1,0 +1,53 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <a routerLink="/app">
+      {{ brand() }}
+    </a>
+  </div>
+
+  <nav
+    class="sidebar-navigation"
+    aria-label="Main navigation"
+  >
+    <a
+      routerLink="/app"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <span class="navigation-icon">⌂</span>
+      <span>Dashboard</span>
+    </a>
+
+    <a
+      routerLink="/app"
+      routerLinkActive="active"
+    >
+      <span class="navigation-icon">▣</span>
+      <span>Learning</span>
+    </a>
+
+    <a
+      routerLink="/app"
+      routerLinkActive="active"
+    >
+      <span class="navigation-icon">◆</span>
+      <span>Vocabulary</span>
+    </a>
+
+    <a
+      routerLink="/app"
+      routerLinkActive="active"
+    >
+      <span class="navigation-icon">?</span>
+      <span>Quiz</span>
+    </a>
+
+    <a
+      routerLink="/app"
+      routerLinkActive="active"
+    >
+      <span class="navigation-icon">♙</span>
+      <span>Profile</span>
+    </a>
+  </nav>
+</aside>

@@ -1,0 +1,25 @@
+<header class="dashboard-header">
+  <button
+    type="button"
+    class="menu-button"
+    aria-label="Open navigation menu"
+    (click)="toggleMenu()"
+  >
+    ☰
+  </button>
+
+  <div class="header-content">
+    <span class="dashboard-title">
+      {{ title() }}
+    </span>
+  </div>
+
+  <a
+    routerLink="/app"
+    class="profile-link"
+    aria-label="Profile"
+  >
+    Profile
+  </a>
+</header>
+
