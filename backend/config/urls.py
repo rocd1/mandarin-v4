@@ -30,6 +30,11 @@ urlpatterns = [
         "api/",
         include("accounts.urls"),
     ),
+
+    path(
+        "api/learning/",
+        include("learning.api.urls"),
+    ),
 ]
 
 if settings.DEBUG:

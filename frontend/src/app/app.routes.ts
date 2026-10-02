@@ -7,6 +7,7 @@ import { Guest } from './pages/guest/guest';
 
 import { AuthTest } from './pages/auth-test/auth-test';
 import { RequestStateTest } from './pages/request-state-test/request-state-test';
+import { LearningTest } from './pages/learning-test/learning-test';
 
 import { Dashboard } from './pages/dashboard/dashboard';
 
@@ -14,6 +15,8 @@ import { authGuard } from './core/guards/auth-guard';
 
 import { PublicLayout } from './layouts/public-layout/public-layout';
 import { AppLayout } from './layouts/app-layout/app-layout';
+
+
 
 
 export const routes: Routes = [
@@ -76,6 +79,13 @@ export const routes: Routes = [
     path: 'request-state-test',
     component: RequestStateTest,
   },
+
+  {
+    path: 'learning-test',
+    component: LearningTest,
+  },
+
+
 
   // ============================================================
   // FALLBACK
