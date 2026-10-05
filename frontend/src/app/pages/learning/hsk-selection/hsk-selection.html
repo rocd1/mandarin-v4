@@ -1,0 +1,47 @@
+<section>
+  <h1>Choose Your HSK Level</h1>
+
+  <p>
+    Select a level to study vocabulary.
+  </p>
+
+  @if (loading()) {
+    <p>Loading HSK levels...</p>
+  }
+
+  @if (error()) {
+    <div class="error">
+      <p>{{ error() }}</p>
+
+      <button
+        type="button"
+        class="retry-button"
+        (click)="loadLevels()"
+      >
+        Try Again
+      </button>
+    </div>
+  }
+
+  @if (!loading() && !error()) {
+    <div class="level-grid">
+      @for (level of levels(); track level.id) {
+        <button
+          type="button"
+          class="level-card"
+          (click)="selectLevel(level)"
+        >
+          <span class="level-name">
+            {{ level.name }}
+          </span>
+
+          @if (level.description) {
+            <span class="level-description">
+              {{ level.description }}
+            </span>
+          }
+        </button>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,117 @@
+section {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+.header p {
+  margin: 0.75rem 0 0;
+  opacity: 0.7;
+}
+
+
+/* ============================================================
+   QUIZ TYPES
+   ============================================================ */
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.quiz-card {
+  padding: 1.5rem;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+
+  background: transparent;
+  color: inherit;
+
+  text-align: left;
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+.quiz-card:hover {
+  border-color: #111;
+}
+
+.quiz-card:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+.quiz-title {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.quiz-description {
+  display: block;
+
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+
+/* ============================================================
+   BACK BUTTON
+   ============================================================ */
+
+.back-button {
+  display: block;
+
+  margin: 2rem auto 0;
+  padding: 0.9rem 1.25rem;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+
+  background: transparent;
+  color: inherit;
+
+  cursor: pointer;
+}
+
+.back-button:hover {
+  border-color: #111;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  section {
+    padding: 1.5rem 0;
+  }
+
+  .quiz-grid {
+    grid-template-columns: 1fr;
+  }
+}

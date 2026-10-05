@@ -1,0 +1,83 @@
+<section>
+  <div class="header">
+    <h1>Choose Quiz Type</h1>
+
+    @if (hskLevel !== null) {
+      <p>
+        HSK {{ hskLevel }}
+      </p>
+    }
+  </div>
+
+  <div class="quiz-grid">
+
+    <button
+      type="button"
+      class="quiz-card"
+      (click)="selectQuizType('hanzi_to_meaning')"
+    >
+      <span class="quiz-title">
+        Hanzi → Meaning
+      </span>
+
+      <span class="quiz-description">
+        See the Chinese word and choose its meaning.
+      </span>
+    </button>
+
+
+    <button
+      type="button"
+      class="quiz-card"
+      (click)="selectQuizType('meaning_to_hanzi')"
+    >
+      <span class="quiz-title">
+        Meaning → Hanzi
+      </span>
+
+      <span class="quiz-description">
+        See the meaning and choose the Chinese word.
+      </span>
+    </button>
+
+
+    <button
+      type="button"
+      class="quiz-card"
+      (click)="selectQuizType('hanzi_to_pinyin')"
+    >
+      <span class="quiz-title">
+        Hanzi → Pinyin
+      </span>
+
+      <span class="quiz-description">
+        See the Chinese word and choose its pronunciation.
+      </span>
+    </button>
+
+
+    <button
+      type="button"
+      class="quiz-card"
+      (click)="selectQuizType('pinyin_to_hanzi')"
+    >
+      <span class="quiz-title">
+        Pinyin → Hanzi
+      </span>
+
+      <span class="quiz-description">
+        See the pronunciation and choose the Chinese word.
+      </span>
+    </button>
+
+  </div>
+
+
+  <button
+    type="button"
+    class="back-button"
+    (click)="backToStudy()"
+  >
+    Back to Study
+  </button>
+</section>

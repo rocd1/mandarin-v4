@@ -1,0 +1,106 @@
+<section>
+  @if (error()) {
+    <div class="error">
+      <p>{{ error() }}</p>
+
+      <button
+        type="button"
+        (click)="backToHskSelection()"
+      >
+        Back to HSK Selection
+      </button>
+    </div>
+  }
+
+  @if (!error() && hskLevel(); as level) {
+    <div class="header">
+      <h1>HSK {{ level }}</h1>
+
+      <p>
+        Study the vocabulary for this level.
+      </p>
+    </div>
+
+    @if (loading()) {
+      <p>Loading vocabulary...</p>
+    }
+
+    @if (!loading() && studyWords(); as data) {
+      <div class="study-info">
+        <p>
+          <strong>{{ data.count }}</strong>
+          words
+        </p>
+
+        <p class="word-range">
+          Words
+          {{ (data.page - 1) * data.page_size + 1 }}
+          -
+          {{
+            (data.page - 1) * data.page_size
+            + data.results.length
+          }}
+          of
+          {{ data.count }}
+        </p>
+      </div>
+
+      <div class="word-grid">
+        @for (word of data.results; track word.id) {
+          <article class="word-card">
+            <h2 class="word-hanzi">
+              {{ word.simplified }}
+            </h2>
+
+            <p class="word-pinyin">
+              {{ word.pinyin }}
+            </p>
+
+            <p class="word-meaning">
+              {{ word.meaning }}
+            </p>
+          </article>
+        }
+      </div>
+
+      <div class="pagination">
+        <button
+          type="button"
+          [disabled]="data.previous_page === null"
+          (click)="previousPage()"
+        >
+          Previous
+        </button>
+
+        <button
+          type="button"
+          [disabled]="data.next_page === null"
+          (click)="nextPage()"
+        >
+          Next 50
+        </button>
+      </div>
+
+      
+
+      <div class="study-actions">
+        <button
+            type="button"
+            class="start-quiz-button"
+            (click)="startQuiz()"
+        >
+            Start Quiz
+        </button>
+
+        <button
+            type="button"
+            class="back-button"
+            (click)="backToHskSelection()"
+        >
+            Back to HSK Selection
+        </button>
+      </div>
+
+    }
+  }
+</section>

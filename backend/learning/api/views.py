@@ -16,6 +16,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import (
     HSKLevelSerializer,
     QuizAnswerSerializer,
+    QuizQuestionListSerializer,
     QuizQuestionSerializer,
     StudyWordSerializer,
     UserProgressSerializer,
@@ -189,10 +190,46 @@ class QuizQuestionView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
+        hsk_level_value = request.query_params.get(
+            "hsk_level",
+        )
+
         quiz_type_value = request.query_params.get(
             "quiz_type",
             "hanzi_to_meaning",
         )
+
+        try:
+            hsk_level_order = int(
+                hsk_level_value
+            )
+        except (TypeError, ValueError):
+            return Response(
+                {
+                    "detail": "Invalid HSK level.",
+                },
+                status=400,
+            )
+
+        if hsk_level_order < 1 or hsk_level_order > 7:
+            return Response(
+                {
+                    "detail": "HSK level must be between 1 and 7.",
+                },
+                status=400,
+            )
+
+        try:
+            hsk_level = HSKLevel.objects.get(
+                order=hsk_level_order,
+            )
+        except HSKLevel.DoesNotExist:
+            return Response(
+                {
+                    "detail": "HSK level not found.",
+                },
+                status=404,
+            )
 
         try:
             quiz_type = validate_quiz_type(
@@ -207,7 +244,9 @@ class QuizQuestionView(APIView):
             )
 
         vocabulary_ids = list(
-            Vocabulary.objects.values_list(
+            Vocabulary.objects
+            .filter(hsk_level=hsk_level)
+            .values_list(
                 "id",
                 flat=True,
             )
@@ -216,7 +255,10 @@ class QuizQuestionView(APIView):
         if not vocabulary_ids:
             return Response(
                 {
-                    "detail": "No vocabulary is available.",
+                    "detail": (
+                        "No vocabulary is available "
+                        "for this HSK level."
+                    ),
                 },
                 status=404,
             )
@@ -234,10 +276,120 @@ class QuizQuestionView(APIView):
             quiz_type,
         )
 
-        serializer = QuizQuestionSerializer(question)
+        serializer = QuizQuestionSerializer(
+            question
+        )
 
         return Response(serializer.data)
 
+class QuizQuestionListView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        hsk_level_value = request.query_params.get(
+            "hsk_level",
+        )
+
+        quiz_type_value = request.query_params.get(
+            "quiz_type",
+            "hanzi_to_meaning",
+        )
+
+        try:
+            hsk_level_order = int(
+                hsk_level_value
+            )
+        except (TypeError, ValueError):
+            return Response(
+                {
+                    "detail": "Invalid HSK level.",
+                },
+                status=400,
+            )
+
+        if hsk_level_order < 1 or hsk_level_order > 7:
+            return Response(
+                {
+                    "detail": (
+                        "HSK level must be between 1 and 7."
+                    ),
+                },
+                status=400,
+            )
+
+        try:
+            hsk_level = HSKLevel.objects.get(
+                order=hsk_level_order,
+            )
+        except HSKLevel.DoesNotExist:
+            return Response(
+                {
+                    "detail": "HSK level not found.",
+                },
+                status=404,
+            )
+
+        try:
+            quiz_type = validate_quiz_type(
+                quiz_type_value
+            )
+        except ValueError as exc:
+            return Response(
+                {
+                    "detail": str(exc),
+                },
+                status=400,
+            )
+
+        vocabulary_ids = list(
+            Vocabulary.objects
+            .filter(hsk_level=hsk_level)
+            .values_list(
+                "id",
+                flat=True,
+            )
+        )
+
+        if not vocabulary_ids:
+            return Response(
+                {
+                    "detail": (
+                        "No vocabulary is available "
+                        "for this HSK level."
+                    ),
+                },
+                status=404,
+            )
+
+        selected_ids = random.choices(
+            vocabulary_ids,
+            k=10,
+        )
+
+        questions = []
+
+        for vocabulary_id in selected_ids:
+            vocabulary = Vocabulary.objects.get(
+                pk=vocabulary_id,
+            )
+
+            question = generate_question(
+                vocabulary,
+                quiz_type,
+            )
+
+            questions.append(question)
+
+        serializer = QuizQuestionListSerializer(
+            {
+                "questions": questions,
+            }
+        )
+
+        return Response(
+            serializer.data
+        )
+    
 
 class QuizAnswerView(APIView):
     permission_classes = [AllowAny]

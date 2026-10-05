@@ -309,7 +309,7 @@ export class LearningTest implements OnInit {
     this.answerResult.set(null);
 
     this.learningService
-      .getQuizQuestion('hanzi_to_meaning')
+      .getQuizQuestion(1, 'hanzi_to_meaning')
       .subscribe({
         next: (question) => {
           this.question.set(question);

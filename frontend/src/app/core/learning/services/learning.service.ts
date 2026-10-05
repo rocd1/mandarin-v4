@@ -8,6 +8,7 @@ import {
   HSKLevel,
   PaginatedStudyWords,
   QuizQuestion,
+  QuizQuestionsResponse,
   QuizAnswerResult,
   UserProgress,
 } from '../models/learning.models';
@@ -46,13 +47,31 @@ export class LearningService {
     );
   }
 
+
   getQuizQuestion(
+    hskLevel: number,
     quizType: string = 'hanzi_to_meaning',
   ): Observable<QuizQuestion> {
     return this.http.get<QuizQuestion>(
       `${this.baseUrl}/quiz/question/`,
       {
         params: {
+          hsk_level: hskLevel,
+          quiz_type: quizType,
+        },
+      },
+    );
+  }
+
+  getQuizQuestions(
+    hskLevel: number,
+    quizType: string = 'hanzi_to_meaning',
+  ): Observable<QuizQuestionsResponse> {
+    return this.http.get<QuizQuestionsResponse>(
+      `${this.baseUrl}/quiz/questions/`,
+      {
+        params: {
+          hsk_level: hskLevel,
           quiz_type: quizType,
         },
       },

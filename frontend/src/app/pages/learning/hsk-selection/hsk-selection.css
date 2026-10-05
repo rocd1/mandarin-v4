@@ -1,0 +1,99 @@
+section {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+section > p {
+  margin: 1rem 0 2rem;
+  opacity: 0.75;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.level-card {
+  padding: 1.5rem;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+
+  background: transparent;
+  color: inherit;
+
+  text-align: left;
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+.level-card:hover {
+  border-color: #111;
+}
+
+.level-card:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+.level-name {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.level-description {
+  display: block;
+
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+.error {
+  padding: 1rem;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.retry-button {
+  margin-top: 0.75rem;
+
+  padding: 0.75rem 1rem;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+
+  background: transparent;
+  color: inherit;
+
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  border-color: #111;
+}
+
+@media (max-width: 640px) {
+  section {
+    padding: 1.5rem 0;
+  }
+
+  .level-grid {
+    grid-template-columns: 1fr;
+  }
+}

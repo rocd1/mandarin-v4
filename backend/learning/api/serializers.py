@@ -21,6 +21,14 @@ class QuizQuestionSerializer(serializers.Serializer):
             "options": instance.options,
         }
 
+class QuizQuestionListSerializer(
+    serializers.Serializer
+):
+    questions = QuizQuestionSerializer(
+        many=True,
+    )
+
+
 class QuizAnswerSerializer(serializers.Serializer):
     question_id = serializers.CharField()
     answer = serializers.CharField(

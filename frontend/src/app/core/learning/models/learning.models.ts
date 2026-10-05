@@ -47,3 +47,7 @@ export interface PaginatedStudyWords {
   previous_page: number | null;
   results: StudyWord[];
 }
+
+export interface QuizQuestionsResponse {
+  questions: QuizQuestion[];
+}
