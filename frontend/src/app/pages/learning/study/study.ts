@@ -13,7 +13,6 @@ import {
 import { LearningService } from '../../../core/learning/services/learning.service';
 
 import {
-  HSKLevel,
   PaginatedStudyWords,
 } from '../../../core/learning/models/learning.models';
 
@@ -25,14 +24,18 @@ import {
   templateUrl: './study.html',
   styleUrl: './study.css',
 })
-
 export class Study implements OnInit {
   private learningService = inject(LearningService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   hskLevel = signal<number | null>(null);
+
   studyWords = signal<PaginatedStudyWords | null>(null);
+
+  flippedCards = signal<Set<number>>(
+    new Set(),
+  );
 
   loading = signal(false);
   error = signal('');
@@ -69,6 +72,8 @@ export class Study implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
+    this.flippedCards.set(new Set());
+
     this.learningService
       .getStudyWords(level, page)
       .subscribe({
@@ -76,6 +81,7 @@ export class Study implements OnInit {
           this.studyWords.set(result);
           this.loading.set(false);
         },
+
         error: (error) => {
           console.error(
             'Study vocabulary error:',
@@ -89,6 +95,26 @@ export class Study implements OnInit {
           this.loading.set(false);
         },
       });
+  }
+
+  toggleCard(wordId: number): void {
+    this.flippedCards.update(
+      cards => {
+        const updatedCards = new Set(cards);
+
+        if (updatedCards.has(wordId)) {
+          updatedCards.delete(wordId);
+        } else {
+          updatedCards.add(wordId);
+        }
+
+        return updatedCards;
+      },
+    );
+  }
+
+  isCardFlipped(wordId: number): boolean {
+    return this.flippedCards().has(wordId);
   }
 
   nextPage(): void {

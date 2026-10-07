@@ -35,10 +35,8 @@ section {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-
   margin-bottom: 1.5rem;
   padding: 1rem;
-
   border: 1px solid #ccc;
   border-radius: 0.5rem;
 }
@@ -53,7 +51,7 @@ section {
 
 
 /* ============================================================
-   VOCABULARY
+   VOCABULARY / FLASHCARDS
    ============================================================ */
 
 .word-grid {
@@ -62,29 +60,116 @@ section {
   gap: 1rem;
 }
 
-.word-card {
+.flashcard {
+  width: 100%;
+  height: 18rem;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+
+/* ============================================================
+   DESKTOP HOVER
+   ============================================================ */
+
+.flashcard:hover .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+
+/* ============================================================
+   MOBILE / TOUCH
+   ============================================================ */
+
+@media (hover: none) {
+
+  /* Disable desktop hover behavior on touch devices */
+  .flashcard:hover .flashcard-inner {
+    transform: none;
+  }
+
+  /* Use tap state instead */
+  .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+/* ============================================================
+   FLASHCARD SIDES
+   ============================================================ */
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   padding: 1.5rem;
 
-  border: 1px solid #ccc;
+  border: 1px solid #9fc5e8;
   border-radius: 0.5rem;
+
+  background: #eef6ff;
+  border: 1px solid #c7ddf5;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-.word-hanzi {
-  margin: 0 0 0.5rem;
-
-  font-size: 2rem;
-  line-height: 1.2;
+.flashcard-back {
+  transform: rotateY(180deg);
 }
 
-.word-pinyin {
-  margin: 0 0 0.75rem;
 
-  opacity: 0.7;
+/* ============================================================
+   FLASHCARD CONTENT
+   ============================================================ */
+
+.hanzi {
+  margin-bottom: 1rem;
+  font-size: 4rem;
+  line-height: 1.1;
+  font-weight: 500;
 }
 
-.word-meaning {
-  margin: 0;
-  line-height: 1.6;
+.pinyin {
+  font-size: 1.25rem;
+}
+
+.meaning {
+  max-width: 90%;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+
+/* ============================================================
+   FLIP HINT
+   ============================================================ */
+
+.flip-hint {
+  position: absolute;
+  bottom: 1.25rem;
+
+  font-size: 0.85rem;
+  opacity: 0.55;
+}
+
+.mobile-hint {
+  display: none;
 }
 
 
@@ -96,32 +181,25 @@ section {
   display: flex;
   justify-content: center;
   gap: 1rem;
-
   margin-top: 2rem;
 }
 
 .start-quiz-button {
   padding: 0.9rem 1.25rem;
-
   border: 1px solid #111;
   border-radius: 0.5rem;
-
   background: #111;
   color: #fff;
-
   font-weight: 600;
   cursor: pointer;
 }
 
 .back-button {
   padding: 0.9rem 1.25rem;
-
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-
   background: transparent;
   color: inherit;
-
   cursor: pointer;
 }
 
@@ -138,19 +216,15 @@ section {
   display: flex;
   justify-content: center;
   gap: 0.75rem;
-
   margin-top: 2rem;
 }
 
 .pagination button {
   padding: 0.75rem 1.25rem;
-
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-
   background: transparent;
   color: inherit;
-
   cursor: pointer;
 }
 
@@ -164,18 +238,65 @@ section {
 }
 
 
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
 @media (max-width: 640px) {
+
   section {
     padding: 1.5rem 0;
   }
+
 
   .study-info {
     flex-direction: column;
   }
 
+
   .word-grid {
     grid-template-columns: 1fr;
   }
+
+
+  /* ----------------------------------------------------------
+     MOBILE FLASHCARD
+     ---------------------------------------------------------- */
+
+  .flashcard {
+    height: 18rem;
+  }
+
+  .flashcard-front,
+  .flashcard-back {
+    padding: 1.5rem;
+  }
+
+  .hanzi {
+    font-size: 4rem;
+  }
+
+  .pinyin {
+    font-size: 1.25rem;
+  }
+
+  .meaning {
+    font-size: 1.15rem;
+  }
+
+
+  .desktop-hint {
+    display: none;
+  }
+
+  .mobile-hint {
+    display: block;
+  }
+
+
+  /* ----------------------------------------------------------
+     MOBILE ACTIONS
+     ---------------------------------------------------------- */
 
   .study-actions {
     flex-direction: column;
@@ -185,4 +306,5 @@ section {
   .back-button {
     width: 100%;
   }
+
 }

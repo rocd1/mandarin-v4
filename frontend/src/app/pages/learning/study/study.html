@@ -1,4 +1,5 @@
 <section>
+
   @if (error()) {
     <div class="error">
       <p>{{ error() }}</p>
@@ -12,21 +13,31 @@
     </div>
   }
 
+
   @if (!error() && hskLevel(); as level) {
+
     <div class="header">
-      <h1>HSK {{ level }}</h1>
+
+      <h1>
+        HSK {{ level }}
+      </h1>
 
       <p>
         Study the vocabulary for this level.
       </p>
+
     </div>
+
 
     @if (loading()) {
       <p>Loading vocabulary...</p>
     }
 
+
     @if (!loading() && studyWords(); as data) {
+
       <div class="study-info">
+
         <p>
           <strong>{{ data.count }}</strong>
           words
@@ -43,27 +54,90 @@
           of
           {{ data.count }}
         </p>
+
       </div>
+
+
+      <!-- =====================================================
+           VOCABULARY FLASHCARDS
+           ===================================================== -->
 
       <div class="word-grid">
-        @for (word of data.results; track word.id) {
-          <article class="word-card">
-            <h2 class="word-hanzi">
-              {{ word.simplified }}
-            </h2>
 
-            <p class="word-pinyin">
-              {{ word.pinyin }}
-            </p>
+        @for (
+          word of data.results;
+          track word.id
+        ) {
 
-            <p class="word-meaning">
-              {{ word.meaning }}
-            </p>
-          </article>
+          <div
+            class="flashcard"
+            [class.flipped]="isCardFlipped(word.id)"
+            (click)="toggleCard(word.id)"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="
+              'Vocabulary flashcard for ' + word.simplified
+            "
+          >
+
+            <div class="flashcard-inner">
+
+              <!-- FRONT -->
+
+              <div class="flashcard-front">
+
+                <div class="hanzi">
+                  {{ word.simplified }}
+                </div>
+
+                <div class="pinyin">
+                  {{ word.pinyin }}
+                </div>
+
+                <span class="flip-hint desktop-hint">
+                  Hover to reveal meaning
+                </span>
+
+                <span class="flip-hint mobile-hint">
+                  Tap to reveal meaning
+                </span>
+
+              </div>
+
+
+              <!-- BACK -->
+
+              <div class="flashcard-back">
+
+                <div class="meaning">
+                  {{ word.meaning }}
+                </div>
+
+                <span class="flip-hint desktop-hint">
+                  Move away to flip back
+                </span>
+
+                <span class="flip-hint mobile-hint">
+                  Tap to flip back
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
         }
+
       </div>
 
+
+      <!-- =====================================================
+           PAGINATION
+           ===================================================== -->
+
       <div class="pagination">
+
         <button
           type="button"
           [disabled]="data.previous_page === null"
@@ -79,28 +153,36 @@
         >
           Next 50
         </button>
+
       </div>
 
-      
+
+      <!-- =====================================================
+           ACTIONS
+           ===================================================== -->
 
       <div class="study-actions">
+
         <button
-            type="button"
-            class="start-quiz-button"
-            (click)="startQuiz()"
+          type="button"
+          class="start-quiz-button"
+          (click)="startQuiz()"
         >
-            Start Quiz
+          Start Quiz
         </button>
 
         <button
-            type="button"
-            class="back-button"
-            (click)="backToHskSelection()"
+          type="button"
+          class="back-button"
+          (click)="backToHskSelection()"
         >
-            Back to HSK Selection
+          Back to HSK Selection
         </button>
+
       </div>
 
     }
+
   }
+
 </section>
