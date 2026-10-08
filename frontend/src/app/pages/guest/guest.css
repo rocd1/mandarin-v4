@@ -90,20 +90,18 @@ h1 {
 
 .actions button {
   width: min(100%, 280px);
-
   padding: 0.9rem;
-
   border: 0;
   border-radius: 0.4rem;
-
   background: #111;
   color: #fff;
-
   font: inherit;
   font-weight: 600;
+  cursor: pointer;
+}
 
-  opacity: 0.5;
-  cursor: not-allowed;
+.actions button:hover {
+  opacity: 0.9;
 }
 
 .actions a {

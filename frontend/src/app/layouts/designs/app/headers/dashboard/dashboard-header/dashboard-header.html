@@ -1,17 +1,25 @@
 <header class="dashboard-header">
+
   <button
     type="button"
     class="menu-button"
-    aria-label="Open navigation menu"
+    [attr.aria-label]="
+      menuOpen()
+        ? 'Close navigation menu'
+        : 'Open navigation menu'
+    "
+    [attr.aria-expanded]="menuOpen()"
     (click)="toggleMenu()"
   >
-    ☰
+    {{ menuOpen() ? '✕' : '☰' }}
   </button>
 
   <div class="header-content">
+
     <span class="dashboard-title">
       {{ title() }}
     </span>
+
   </div>
 
   <a
@@ -21,5 +29,5 @@
   >
     Profile
   </a>
-</header>
 
+</header>

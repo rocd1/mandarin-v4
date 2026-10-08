@@ -39,6 +39,7 @@ class UserProgressSerializer(serializers.Serializer):
     vocabulary_id = serializers.IntegerField()
     simplified = serializers.CharField()
     pinyin = serializers.CharField()
+    hsk_level = serializers.IntegerField()
     correct_count = serializers.IntegerField()
     incorrect_count = serializers.IntegerField()
     last_reviewed_at = serializers.DateTimeField(

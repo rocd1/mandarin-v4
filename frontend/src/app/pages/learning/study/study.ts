@@ -12,8 +12,11 @@ import {
 
 import { LearningService } from '../../../core/learning/services/learning.service';
 
+import { AuthStateService } from '../../../core/auth/services/auth-state';
+
 import {
-  PaginatedStudyWords,
+  PaginatedStudyWords, 
+  UserProgress,
 } from '../../../core/learning/models/learning.models';
 
 
@@ -26,12 +29,15 @@ import {
 })
 export class Study implements OnInit {
   private learningService = inject(LearningService);
+  private authStateService = inject(AuthStateService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   hskLevel = signal<number | null>(null);
 
   studyWords = signal<PaginatedStudyWords | null>(null);
+
+  userProgress = signal<UserProgress[]>([]);
 
   flippedCards = signal<Set<number>>(
     new Set(),
@@ -79,7 +85,51 @@ export class Study implements OnInit {
       .subscribe({
         next: (result) => {
           this.studyWords.set(result);
-          this.loading.set(false);
+
+
+          if (!this.authStateService.isAuthenticated) {
+            this.userProgress.set([]);
+            this.loading.set(false);
+            return;
+          }
+
+          this.learningService
+            .getUserProgress()
+            .subscribe({
+              next: (progress) => {
+                this.userProgress.set(progress);
+                this.loading.set(false);
+              },
+
+              error: (error) => {
+                console.error(
+                  'User progress error:',
+                  error,
+                );
+
+                this.userProgress.set([]);
+                this.loading.set(false);
+              },
+            });
+
+          this.learningService
+            .getUserProgress()
+            .subscribe({
+              next: (progress) => {
+                this.userProgress.set(progress);
+                this.loading.set(false);
+              },
+
+              error: (error) => {
+                console.error(
+                  'User progress error:',
+                  error,
+                );
+
+                this.userProgress.set([]);
+                this.loading.set(false);
+              },
+            });
         },
 
         error: (error) => {
@@ -96,6 +146,33 @@ export class Study implements OnInit {
         },
       });
   }
+
+  getStudiedCount(): number {
+    const level = this.hskLevel();
+
+    if (level === null) {
+      return 0;
+    }
+
+    return this.userProgress().filter(
+      progress => progress.hsk_level === level,
+    ).length;
+  }
+
+  getProgressPercentage(): number {
+    const data = this.studyWords();
+
+    if (!data || data.count === 0) {
+      return 0;
+    }
+
+    return Math.round(
+      (this.getStudiedCount() / data.count) * 100,
+    );
+  }
+
+
+
 
   toggleCard(wordId: number): void {
     this.flippedCards.update(
@@ -158,4 +235,9 @@ export class Study implements OnInit {
       'quiz',
     ]);
   }
+
+  isAuthenticated(): boolean {
+    return this.authStateService.isAuthenticated;
+  }
+
 }

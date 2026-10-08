@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+
+import {
+  Router,
+  RouterLink,
+} from '@angular/router';
 
 @Component({
   selector: 'app-guest',
@@ -7,4 +11,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './guest.html',
   styleUrl: './guest.css',
 })
-export class Guest {}
+export class Guest {
+  constructor(
+    private readonly router: Router,
+  ) {}
+
+  continueAsGuest(): void {
+    void this.router.navigate(['/learning']);
+  }
+}

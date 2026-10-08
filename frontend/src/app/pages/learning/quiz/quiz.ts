@@ -10,12 +10,13 @@ import {
   Router,
 } from '@angular/router';
 
-
-
 import { LearningService } from '../../../core/learning/services/learning.service';
+
+import { AuthStateService } from '../../../core/auth/services/auth-state';
 
 import {
   QuizQuestion,
+  QuizAnswerResult,
 } from '../../../core/learning/models/learning.models';
 
 
@@ -35,27 +36,51 @@ interface QuizResult {
   styleUrl: './quiz.css',
 })
 export class Quiz implements OnInit {
-  private learningService = inject(LearningService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly learningService =
+    inject(LearningService);
+
+  private readonly authStateService =
+    inject(AuthStateService);
+
+  private readonly route =
+    inject(ActivatedRoute);
+
+  private readonly router =
+    inject(Router);
 
 
   hskLevel = signal<number | null>(null);
+
   quizType = signal<string>('');
 
+
   questions = signal<QuizQuestion[]>([]);
+
   currentQuestionIndex = signal(0);
 
-  selectedAnswer = signal<string | null>(null);
-  submitted = signal(false);
+
+  selectedAnswers =
+    signal<(string | null)[]>(
+      Array(10).fill(null),
+    );
+
 
   correctCount = signal(0);
+
   incorrectCount = signal(0);
+
 
   results = signal<QuizResult[]>([]);
 
+
   loading = signal(false);
+
+  submitting = signal(false);
+
   error = signal('');
+
+
+  showResults = signal(false);
 
 
   ngOnInit(): void {
@@ -78,24 +103,26 @@ export class Quiz implements OnInit {
       'pinyin_to_hanzi',
     ];
 
+
     if (
       !levelValue ||
       !Number.isInteger(level) ||
       level < 1 ||
       level > 7
     ) {
-      this.router.navigate([
+      void this.router.navigate([
         '/learning',
       ]);
 
       return;
     }
 
+
     if (
       !quizType ||
       !validQuizTypes.includes(quizType)
     ) {
-      this.router.navigate([
+      void this.router.navigate([
         '/learning/hsk',
         level,
         'quiz',
@@ -104,7 +131,9 @@ export class Quiz implements OnInit {
       return;
     }
 
+
     this.hskLevel.set(level);
+
     this.quizType.set(quizType);
 
     this.loadQuiz();
@@ -113,7 +142,9 @@ export class Quiz implements OnInit {
 
   loadQuiz(): void {
     const level = this.hskLevel();
+
     const quizType = this.quizType();
+
 
     if (
       level === null ||
@@ -122,27 +153,30 @@ export class Quiz implements OnInit {
       return;
     }
 
+
     this.loading.set(true);
+
     this.error.set('');
 
+    this.submitting.set(false);
+
+    this.showResults.set(false);
+
+
     this.questions.set([]);
+
     this.currentQuestionIndex.set(0);
 
-    this.selectedAnswer.set(null);
-    this.submitted.set(false);
+    this.selectedAnswers.set(
+      Array(10).fill(null),
+    );
 
     this.correctCount.set(0);
+
     this.incorrectCount.set(0);
+
     this.results.set([]);
 
-    const requests = Array.from(
-      { length: 10 },
-      () =>
-        this.learningService.getQuizQuestion(
-          level,
-          quizType,
-        ),
-    );
 
     this.learningService
       .getQuizQuestions(
@@ -171,7 +205,6 @@ export class Quiz implements OnInit {
           this.loading.set(false);
         },
       });
-      
   }
 
 
@@ -186,94 +219,204 @@ export class Quiz implements OnInit {
   }
 
 
-  get isComplete(): boolean {
+  get selectedAnswer(): string | null {
     return (
-      this.questions().length === 10 &&
-      this.currentQuestionIndex() >= 10
+      this.selectedAnswers()[
+        this.currentQuestionIndex()
+      ] ?? null
     );
+  }
+
+
+  get isComplete(): boolean {
+    return this.showResults();
   }
 
 
   selectAnswer(answer: string): void {
-    if (this.submitted()) {
+    if (this.submitting()) {
       return;
     }
 
-    this.selectedAnswer.set(answer);
+
+    const index =
+      this.currentQuestionIndex();
+
+
+    this.selectedAnswers.update(
+      answers => {
+        const updated = [...answers];
+
+        updated[index] = answer;
+
+        return updated;
+      },
+    );
   }
 
 
-  submitAnswer(): void {
-    const question = this.currentQuestion;
-    const answer = this.selectedAnswer();
+  previousQuestion(): void {
+    const index =
+      this.currentQuestionIndex();
 
-    if (
-      !question ||
-      !answer ||
-      this.submitted()
-    ) {
+
+    if (index === 0) {
       return;
     }
 
-    this.submitted.set(true);
 
-    this.learningService
-      .submitQuizAnswer(
-        question.id,
-        answer,
-      )
-      .subscribe({
-        next: (result) => {
-          if (result.correct) {
-            this.correctCount.update(
-              count => count + 1,
-            );
-          } else {
-            this.incorrectCount.update(
-              count => count + 1,
-            );
-          }
-
-          this.results.update(
-            results => [
-              ...results,
-              {
-                question: question.prompt,
-                yourAnswer: answer,
-                correctAnswer: result.correct_answer,
-                correct: result.correct,
-              },
-            ],
-          );
-        },
-
-        error: (error) => {
-          console.error(
-            'Quiz answer error:',
-            error,
-          );
-
-          this.error.set(
-            'Failed to submit your answer.',
-          );
-
-          this.submitted.set(false);
-        },
-      });
+    this.currentQuestionIndex.update(
+      value => value - 1,
+    );
   }
 
 
   nextQuestion(): void {
-    if (!this.submitted()) {
+    const index =
+      this.currentQuestionIndex();
+
+
+    if (
+      index >= 9 ||
+      !this.selectedAnswer
+    ) {
       return;
     }
 
-    this.selectedAnswer.set(null);
-    this.submitted.set(false);
 
     this.currentQuestionIndex.update(
-      index => index + 1,
+      value => value + 1,
     );
+  }
+
+
+  finishQuiz(): void {
+    if (
+      this.submitting() ||
+      this.questions().length !== 10
+    ) {
+      return;
+    }
+
+
+    const answers =
+      this.selectedAnswers();
+
+
+    if (
+      answers.some(
+        answer => !answer,
+      )
+    ) {
+      this.error.set(
+        'Please answer all 10 questions before finishing the quiz.',
+      );
+
+      return;
+    }
+
+
+    this.error.set('');
+
+    this.submitting.set(true);
+
+
+    const questions =
+      this.questions();
+
+
+    const results: QuizResult[] = [];
+
+    let correctCount = 0;
+
+    let incorrectCount = 0;
+
+
+    const submitQuestion = (
+      index: number,
+    ): void => {
+      if (index >= questions.length) {
+        this.correctCount.set(
+          correctCount,
+        );
+
+        this.incorrectCount.set(
+          incorrectCount,
+        );
+
+        this.results.set(results);
+
+        this.submitting.set(false);
+
+        this.showResults.set(true);
+
+        return;
+      }
+
+
+      const question =
+        questions[index];
+
+      const answer =
+        answers[index];
+
+
+      if (!answer) {
+        return;
+      }
+
+
+      this.learningService
+        .submitQuizAnswer(
+          question.id,
+          answer,
+        )
+        .subscribe({
+          next: (result) => {
+            if (result.correct) {
+              correctCount++;
+            } else {
+              incorrectCount++;
+            }
+
+
+            results.push({
+              question:
+                question.prompt,
+
+              yourAnswer:
+                answer,
+
+              correctAnswer:
+                result.correct_answer,
+
+              correct:
+                result.correct,
+            });
+
+
+            submitQuestion(
+              index + 1,
+            );
+          },
+
+          error: (error) => {
+            console.error(
+              'Quiz answer error:',
+              error,
+            );
+
+            this.error.set(
+              'Failed to submit the quiz answers.',
+            );
+
+            this.submitting.set(false);
+          },
+        });
+    };
+
+
+    submitQuestion(0);
   }
 
 
@@ -290,18 +433,39 @@ export class Quiz implements OnInit {
   backToHsk(): void {
     const level = this.hskLevel();
 
+
     if (level === null) {
-      this.router.navigate([
+      void this.router.navigate([
         '/learning',
       ]);
 
       return;
     }
 
-    this.router.navigate([
+
+    void this.router.navigate([
       '/learning/hsk',
       level,
     ]);
+  }
+
+
+  goToRegister(): void {
+    void this.router.navigate([
+      '/register',
+    ]);
+  }
+
+
+  goToLogin(): void {
+    void this.router.navigate([
+      '/login',
+    ]);
+  }
+
+
+  isAuthenticated(): boolean {
+    return this.authStateService.isAuthenticated;
   }
 
 

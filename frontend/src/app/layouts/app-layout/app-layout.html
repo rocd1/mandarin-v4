@@ -1,6 +1,8 @@
 <div class="app-layout">
   <app-dashboard-header
+    [menuOpen]="isMenuOpen()"
     (menuToggle)="toggleMenu()"
+
   />
 
   @if (isMenuOpen()) {
@@ -8,13 +10,42 @@
       class="menu-panel"
       aria-label="Secondary navigation"
     >
-      <a routerLink="/app">Settings</a>
-      <a routerLink="/app">Contact Us</a>
-      <a routerLink="/app">Community</a>
+
+      <a routerLink="/app">
+        Dashboard
+      </a>
+
+      <a routerLink="/learning">
+        Study
+      </a>
+
+      <a routerLink="/learning">
+        Quiz
+      </a>
 
       <div class="menu-divider"></div>
 
-      <a routerLink="/app">Logout</a>
+      <a routerLink="/app">
+        Settings
+      </a>
+
+      <a routerLink="/app">
+        Contact Us
+      </a>
+
+      <a routerLink="/app">
+        Community
+      </a>
+
+      <div class="menu-divider"></div>
+
+      <button
+        type="button"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+
     </nav>
   }
 

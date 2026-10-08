@@ -1,32 +1,51 @@
 <main class="guest-page">
   <section class="guest-card">
-    <a routerLink="/" class="back-link">
+
+    <a
+      routerLink="/"
+      class="back-link"
+    >
       ← Back to home
     </a>
 
     <div class="content">
-      <p class="eyebrow">PROJECT APP STARTER</p>
 
-      <h1>Continue as Guest</h1>
+      <p class="eyebrow">
+        MANDARIN LEARNING
+      </p>
+
+      <h1>
+        Continue as Guest
+      </h1>
 
       <p>
-        Explore the application without creating an account.
+        Practice Mandarin vocabulary without
+        creating an account.
       </p>
 
       <p class="note">
-        Guest functionality can be connected to the application's
-        guest-session flow when this starter is reused.
+        You can study vocabulary and take quizzes
+        as a guest. Sign in or create an account
+        later if you want your learning progress
+        to be saved.
       </p>
 
       <div class="actions">
-        <button type="button" disabled>
+
+        <button
+          type="button"
+          (click)="continueAsGuest()"
+        >
           Continue as Guest
         </button>
 
         <a routerLink="/login">
           Sign in instead
         </a>
+
       </div>
+
     </div>
+
   </section>
 </main>

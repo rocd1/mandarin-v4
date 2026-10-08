@@ -1,16 +1,133 @@
-<h1>Application</h1>
+<section class="dashboard">
 
-<p>You are authenticated.</p>
+  @if (loading()) {
 
-<button type="button" (click)="testProtectedEndpoint()">
-  Test Protected Endpoint
-</button>
+    <p>
+      Loading your dashboard...
+    </p>
 
-<button type="button" (click)="testConcurrentRequests()">
-  Test Concurrent Requests
-</button>
+  }
 
-<button type="button" (click)="testUnauthenticatedMe()">
-  Test Unauthenticated /me
-</button>
+  @if (!loading() && error()) {
 
+    <div class="error">
+
+      <p>
+        {{ error() }}
+      </p>
+
+    </div>
+
+  }
+
+  @if (!loading() && !error() && user(); as currentUser) {
+
+    <header class="dashboard-intro">
+
+      <h1>
+        Welcome,
+        {{ currentUser.first_name || currentUser.username }}
+      </h1>
+
+      <p>
+        Continue learning Mandarin.
+      </p>
+
+    </header>
+
+
+    <section class="account-card">
+
+      <h2>
+        Your Account
+      </h2>
+
+      <div class="account-info">
+
+        <div class="account-item">
+
+          <span class="account-label">
+            Username
+          </span>
+
+          <span class="account-value">
+            {{ currentUser.username }}
+          </span>
+
+        </div>
+
+
+        <div class="account-item">
+
+          <span class="account-label">
+            Email
+          </span>
+
+          <span class="account-value">
+            {{ currentUser.email || 'Not provided' }}
+          </span>
+
+        </div>
+
+
+        @if (
+          currentUser.first_name ||
+          currentUser.last_name
+        ) {
+
+          <div class="account-item">
+
+            <span class="account-label">
+              Name
+            </span>
+
+            <span class="account-value">
+
+              {{ currentUser.first_name }}
+              {{ currentUser.last_name }}
+
+            </span>
+
+          </div>
+
+        }
+
+      </div>
+
+    </section>
+
+
+    <section class="learning-card">
+
+      <h2>
+        Continue Learning
+      </h2>
+
+      <p>
+        Study vocabulary or test your knowledge.
+      </p>
+
+      <div class="learning-actions">
+
+        <button
+          type="button"
+          (click)="goToStudy()"
+        >
+          Study Vocabulary
+        </button>
+
+        <button
+          type="button"
+          class="secondary"
+          (click)="goToQuiz()"
+        >
+          Take a Quiz
+        </button>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>

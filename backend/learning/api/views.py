@@ -491,7 +491,10 @@ class UserProgressView(APIView):
         progress = (
             UserProgress.objects
             .filter(user=request.user)
-            .select_related("vocabulary")
+            .select_related(
+                "vocabulary",
+                "vocabulary__hsk_level",
+            )
             .order_by("-last_reviewed_at")
         )
 
@@ -500,6 +503,7 @@ class UserProgressView(APIView):
                 "vocabulary_id": item.vocabulary_id,
                 "simplified": item.vocabulary.simplified,
                 "pinyin": item.vocabulary.pinyin,
+                "hsk_level": item.vocabulary.hsk_level.order,
                 "correct_count": item.correct_count,
                 "incorrect_count": item.incorrect_count,
                 "last_reviewed_at": item.last_reviewed_at,

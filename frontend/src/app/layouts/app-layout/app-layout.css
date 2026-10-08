@@ -17,6 +17,7 @@
 .menu-panel {
   display: flex;
   flex-direction: column;
+  text-align: left;
 
   background-color: #ffffff;
   border-bottom: 1px solid #e5e7eb;
@@ -33,7 +34,7 @@
 
   color: #1f2937;
 
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 500;
 
   text-decoration: none;
@@ -58,6 +59,36 @@
 .menu-panel a:last-child {
   border-bottom: 0;
 }
+
+
+.menu-panel button {
+  display: block;
+  width: 100%;
+
+  padding: 1rem 1rem; /* increase for bigger height */
+  font-size: 1.1rem;  /* bigger text */
+  font-weight: 600;
+
+  background-color: #272424;
+  color: white;
+
+  border: none;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.menu-panel button:hover {
+  background-color: #f66060;
+}
+
+.menu-panel button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
+
+
 
 /* ============================================================
    MAIN CONTENT

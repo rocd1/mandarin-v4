@@ -1,14 +1,17 @@
 <section>
+
   @if (error()) {
     <div class="error">
       <p>{{ error() }}</p>
 
-      <button
-        type="button"
-        (click)="loadQuiz()"
-      >
-        Try Again
-      </button>
+      @if (!submitting()) {
+        <button
+          type="button"
+          (click)="loadQuiz()"
+        >
+          Try Again
+        </button>
+      }
     </div>
   }
 
@@ -19,117 +22,187 @@
     </div>
   }
 
-@if (
-  !error() &&
-  !loading() &&
-  isComplete
-) {
-  <div class="result">
-    <h1>Quiz Complete</h1>
 
-    <p class="score">
-      {{ correctCount() }} / 10
-    </p>
-
-    <div class="result-details">
-      <p>
-        <strong>Correct:</strong>
-        {{ correctCount() }}
-      </p>
-
-      <p>
-        <strong>Incorrect:</strong>
-        {{ incorrectCount() }}
-      </p>
+  @if (!error() && submitting()) {
+    <div class="loading">
+      <p>Submitting your quiz...</p>
     </div>
-
-
-    <div class="answer-review">
-      <h2>Answer Review</h2>
-
-      @for (
-        result of results();
-        track $index
-      ) {
-        <article
-          class="answer-item"
-          [class.correct]="result.correct"
-          [class.incorrect]="!result.correct"
-        >
-          <div class="answer-header">
-            <span>
-              Question {{ $index + 1 }}
-            </span>
-
-            <span class="answer-status">
-              @if (result.correct) {
-                Correct
-              } @else {
-                Incorrect
-              }
-            </span>
-          </div>
-
-
-          <p class="review-question">
-            {{ result.question }}
-          </p>
-
-
-          <div class="review-answer">
-            <p>
-              <strong>Your answer:</strong>
-              {{ result.yourAnswer }}
-            </p>
-
-            <p>
-              <strong>Correct answer:</strong>
-              {{ result.correctAnswer }}
-            </p>
-          </div>
-        </article>
-      }
-    </div>
-
-
-    <div class="result-actions">
-      <button
-        type="button"
-        class="primary-button"
-        (click)="tryAgain()"
-      >
-        Try Again
-      </button>
-
-      <button
-        type="button"
-        class="secondary-button"
-        (click)="generateMoreQuestions()"
-      >
-        Generate More Questions
-      </button>
-
-      <button
-        type="button"
-        class="secondary-button"
-        (click)="backToHsk()"
-      >
-        Back to HSK
-      </button>
-    </div>
-  </div>
-} 
+  }
 
 
   @if (
     !error() &&
     !loading() &&
+    !submitting() &&
+    isComplete
+  ) {
+
+    <div class="result">
+
+      <h1>Quiz Complete</h1>
+
+      <p class="score">
+        {{ correctCount() }} / 10
+      </p>
+
+
+      <div class="result-details">
+
+        <p>
+          <strong>Correct:</strong>
+          {{ correctCount() }}
+        </p>
+
+        <p>
+          <strong>Incorrect:</strong>
+          {{ incorrectCount() }}
+        </p>
+
+      </div>
+
+
+      @if (!isAuthenticated()) {
+
+        <div class="save-progress">
+
+          <h2>Save Your Progress</h2>
+
+          <p>
+            Create an account or sign in to keep
+            track of the vocabulary you've studied.
+          </p>
+
+          <div class="save-progress-actions">
+
+            <button
+              type="button"
+              class="primary-button"
+              (click)="goToRegister()"
+            >
+              Create an Account
+            </button>
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="goToLogin()"
+            >
+              Sign In
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <div class="answer-review">
+
+        <h2>Answer Review</h2>
+
+        @for (
+          result of results();
+          track $index
+        ) {
+
+          <article
+            class="answer-item"
+            [class.correct]="result.correct"
+            [class.incorrect]="!result.correct"
+          >
+
+            <div class="answer-header">
+
+              <span>
+                Question {{ $index + 1 }}
+              </span>
+
+              <span class="answer-status">
+
+                @if (result.correct) {
+                  Correct
+                } @else {
+                  Incorrect
+                }
+
+              </span>
+
+            </div>
+
+
+            <p class="review-question">
+              {{ result.question }}
+            </p>
+
+
+            <div class="review-answer">
+
+              <p>
+                <strong>Your answer:</strong>
+                {{ result.yourAnswer }}
+              </p>
+
+              <p>
+                <strong>Correct answer:</strong>
+                {{ result.correctAnswer }}
+              </p>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+
+      <div class="result-actions">
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="tryAgain()"
+        >
+          Try Again
+        </button>
+
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="generateMoreQuestions()"
+        >
+          Generate More Questions
+        </button>
+
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="backToHsk()"
+        >
+          Back to HSK
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  @if (
+    !error() &&
+    !loading() &&
+    !submitting() &&
     !isComplete &&
     currentQuestion;
     as question
   ) {
+
     <div class="header">
+
       <div>
+
         <h1>
           HSK {{ hskLevel() }}
         </h1>
@@ -137,22 +210,27 @@
         <p>
           {{ getQuizTypeTitle() }}
         </p>
+
       </div>
+
 
       <span class="progress">
         Question
         {{ currentQuestionIndex() + 1 }}
         / 10
       </span>
+
     </div>
 
 
     <div class="question-card">
+
       <p class="question-number">
         Question
         {{ currentQuestionIndex() + 1 }}
         of 10
       </p>
+
 
       <h2 class="prompt">
         {{ question.prompt }}
@@ -160,58 +238,72 @@
 
 
       <div class="options">
+
         @for (
           option of question.options;
           track option
         ) {
+
           <button
             type="button"
             class="option"
             [class.selected]="
-              selectedAnswer() === option
+              selectedAnswer === option
             "
-            [disabled]="submitted()"
             (click)="selectAnswer(option)"
           >
             {{ option }}
           </button>
+
         }
+
       </div>
 
 
-      @if (!submitted()) {
+      <div class="question-navigation">
+
         <button
           type="button"
-          class="submit-button"
-          [disabled]="!selectedAnswer()"
-          (click)="submitAnswer()"
+          class="secondary-button"
+          [disabled]="
+            currentQuestionIndex() === 0
+          "
+          (click)="previousQuestion()"
         >
-          Submit Answer
+          Previous Question
         </button>
-      }
 
 
-      @if (submitted()) {
-        <div class="answer-result">
-            <p>
-            Answer submitted.
-            </p>
+        @if (currentQuestionIndex() < 9) {
 
-            <button
+          <button
             type="button"
             class="next-button"
+            [disabled]="!selectedAnswer"
             (click)="nextQuestion()"
-            >
-            @if (
-                currentQuestionIndex() === 9
-            ) {
-                See Results
-            } @else {
-                Next Question
-            }
-            </button>
-        </div>
+          >
+            Next Question
+          </button>
+
+        } @else {
+
+          
+
+          <button
+            type="button"
+            class="next-button"
+            [disabled]="!selectedAnswer"
+            (click)="finishQuiz()"
+          >
+            Submit Quiz
+          </button>
+
         }
+
+      </div>
+
     </div>
+
   }
-</section> 
+
+</section>

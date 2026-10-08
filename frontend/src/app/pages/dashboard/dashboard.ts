@@ -1,69 +1,99 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
+
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../core/auth/services/auth.service';
 
+import { User } from '../../core/auth/models/auth.models';
+
+
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
+
   private readonly authService = inject(AuthService);
 
-  testProtectedEndpoint(): void {
-    this.authService.testProtectedEndpoint().subscribe({
-      next: (response) => {
-        console.log('Protected endpoint:', response);
-      },
-      error: (error) => {
-        console.error('Protected endpoint error:', error);
-      },
-    });
+  private readonly router = inject(Router);
+
+
+  user = signal<User | null>(null);
+
+  loading = signal(true);
+
+  error = signal('');
+
+
+  ngOnInit(): void {
+
+    this.loadUser();
+
   }
 
-  testConcurrentRequests(): void {
-    console.log('Starting 3 concurrent protected requests...');
 
-    this.authService.testProtectedEndpoint().subscribe({
-      next: (response) => {
-        console.log('Request A success:', response);
-      },
-      error: (error) => {
-        console.error('Request A error:', error);
-      },
-    });
+  private loadUser(): void {
 
-    this.authService.testProtectedEndpoint().subscribe({
-      next: (response) => {
-        console.log('Request B success:', response);
-      },
-      error: (error) => {
-        console.error('Request B error:', error);
-      },
-    });
+    this.loading.set(true);
 
-    this.authService.testProtectedEndpoint().subscribe({
-      next: (response) => {
-        console.log('Request C success:', response);
-      },
-      error: (error) => {
-        console.error('Request C error:', error);
-      },
-    });
+    this.error.set('');
+
+
+    this.authService
+      .getCurrentUser()
+      .subscribe({
+
+        next: (user) => {
+
+          this.user.set(user);
+
+          this.loading.set(false);
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Current user error:',
+            error,
+          );
+
+          this.error.set(
+            'Failed to load your account information.',
+          );
+
+          this.loading.set(false);
+
+        },
+
+      });
+
   }
 
-  testUnauthenticatedMe(): void {
-    this.authService.getCurrentUser().subscribe({
-      next: (response) => {
-        console.log('Unexpected success:', response);
-      },
-      error: (error) => {
-        console.log('ME status:', error.status);
-        console.log('ME response body:', error.error);
-        console.log('Full ME error:', error);
-      },
-    });
+
+  goToStudy(): void {
+
+    this.router.navigate([
+      '/learning',
+    ]);
+
   }
-  
+
+
+  goToQuiz(): void {
+
+    this.router.navigate([
+      '/learning',
+    ]);
+
+  }
+
 }

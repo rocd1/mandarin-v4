@@ -7,6 +7,10 @@ section {
 }
 
 
+/* ============================================================
+   HEADER
+   ============================================================ */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -15,19 +19,16 @@ section {
   margin-bottom: 2rem;
 }
 
-
 .header h1 {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
   line-height: 1.1;
 }
 
-
 .header p {
   margin: 0.75rem 0 0;
   opacity: 0.7;
 }
-
 
 .progress {
   padding: 0.5rem 0.75rem;
@@ -38,18 +39,20 @@ section {
 }
 
 
+/* ============================================================
+   QUESTION
+   ============================================================ */
+
 .question-card {
   padding: 2rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
 }
 
-
 .question-number {
   margin: 0 0 1.5rem;
   opacity: 0.6;
 }
-
 
 .prompt {
   margin: 0 0 2rem;
@@ -59,12 +62,15 @@ section {
 }
 
 
+/* ============================================================
+   OPTIONS
+   ============================================================ */
+
 .options {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
 }
-
 
 .option {
   width: 100%;
@@ -78,11 +84,9 @@ section {
   cursor: pointer;
 }
 
-
 .option:hover:not(:disabled) {
   border-color: #111;
 }
-
 
 .option.selected {
   border-color: #111;
@@ -90,11 +94,14 @@ section {
   color: #fff;
 }
 
-
 .option:disabled {
   cursor: default;
 }
 
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 
 .submit-button,
 .next-button,
@@ -106,7 +113,6 @@ section {
   cursor: pointer;
 }
 
-
 .submit-button {
   width: 100%;
   margin-top: 1.5rem;
@@ -115,12 +121,42 @@ section {
   color: #fff;
 }
 
-
 .submit-button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
+.next-button {
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+}
+
+.primary-button {
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+}
+
+.secondary-button {
+  border: 1px solid #ccc;
+  background: transparent;
+  color: inherit;
+}
+
+.secondary-button:hover:not(:disabled) {
+  border-color: #111;
+}
+
+.secondary-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   ANSWER RESULT / NAVIGATION
+   ============================================================ */
 
 .answer-result {
   margin-top: 1.5rem;
@@ -129,19 +165,32 @@ section {
   text-align: center;
 }
 
-
 .answer-result p {
   margin: 0 0 1rem;
   opacity: 0.75;
 }
 
 
-.next-button {
-  border: 1px solid #111;
-  background: #111;
-  color: #fff;
+.question-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
+.question-navigation button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.question-navigation .secondary-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   QUIZ RESULT
+   ============================================================ */
 
 .result {
   padding: 2rem;
@@ -150,12 +199,10 @@ section {
   text-align: center;
 }
 
-
 .result h1 {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
 }
-
 
 .score {
   margin: 1.5rem 0;
@@ -164,7 +211,6 @@ section {
   line-height: 1;
 }
 
-
 .result-details {
   display: flex;
   justify-content: center;
@@ -172,45 +218,123 @@ section {
   margin-bottom: 2rem;
 }
 
-
 .result-details p {
   margin: 0;
 }
 
+
+/* ============================================================
+   SAVE PROGRESS
+   ============================================================ */
+
+.save-progress {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.save-progress h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.save-progress p {
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+.save-progress-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+
+/* ============================================================
+   RESULT ACTIONS
+   ============================================================ */
 
 .result-actions {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   max-width: 320px;
-  margin: 0 auto;
+  margin: 2rem auto 0;
 }
 
 
-.primary-button {
-  border: 1px solid #111;
-  background: #111;
-  color: #fff;
+/* ============================================================
+   ANSWER REVIEW
+   ============================================================ */
+
+.answer-review {
+  margin-top: 2rem;
+  text-align: left;
 }
 
+.answer-review h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+}
 
-.secondary-button {
+.answer-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
   border: 1px solid #ccc;
-  background: transparent;
-  color: inherit;
+  border-radius: 0.5rem;
+}
+
+.answer-item.correct {
+  border-color: #999;
+}
+
+.answer-item.incorrect {
+  border-color: #999;
+}
+
+.answer-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.answer-status {
+  opacity: 0.7;
+}
+
+.review-question {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.review-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.review-answer p {
+  margin: 0;
+  line-height: 1.5;
 }
 
 
-.secondary-button:hover {
-  border-color: #111;
-}
-
+/* ============================================================
+   LOADING / ERROR
+   ============================================================ */
 
 .loading {
   padding: 3rem 0;
   text-align: center;
 }
-
 
 .error {
   padding: 1.5rem;
@@ -218,11 +342,9 @@ section {
   border-radius: 0.5rem;
 }
 
-
 .error p {
   margin: 0 0 1rem;
 }
-
 
 .error button {
   padding: 0.75rem 1rem;
@@ -234,100 +356,41 @@ section {
 }
 
 
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
 @media (max-width: 640px) {
   section {
     padding: 1.5rem 0;
   }
 
-
   .header {
     flex-direction: column;
   }
-
 
   .progress {
     align-self: flex-start;
   }
 
-
   .question-card {
     padding: 1.25rem;
   }
-
 
   .result {
     padding: 1.5rem;
   }
 
-
   .result-details {
     flex-direction: column;
     gap: 0.75rem;
   }
-}
 
+  .question-navigation {
+    flex-direction: column;
+  }
 
-
-.answer-review {
-  margin-top: 2rem;
-  text-align: left;
-}
-
-
-.answer-review h2 {
-  margin: 0 0 1rem;
-  font-size: 1.25rem;
-}
-
-
-.answer-item {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-}
-
-
-.answer-item.correct {
-  border-color: #999;
-}
-
-
-.answer-item.incorrect {
-  border-color: #999;
-}
-
-
-.answer-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-
-.answer-status {
-  opacity: 0.7;
-}
-
-
-.review-question {
-  margin: 0 0 1rem;
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-
-.review-answer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-
-.review-answer p {
-  margin: 0;
-  line-height: 1.5;
+  .question-navigation button {
+    width: 100%;
+  }
 }

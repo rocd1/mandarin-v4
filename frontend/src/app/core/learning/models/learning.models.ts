@@ -16,6 +16,7 @@ export interface UserProgress {
   vocabulary_id: number;
   simplified: string;
   pinyin: string;
+  hsk_level: number;
   correct_count: number;
   incorrect_count: number;
   last_reviewed_at: string | null;

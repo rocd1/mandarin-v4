@@ -1,8 +1,12 @@
 <section>
 
   @if (error()) {
+
     <div class="error">
-      <p>{{ error() }}</p>
+
+      <p>
+        {{ error() }}
+      </p>
 
       <button
         type="button"
@@ -10,7 +14,9 @@
       >
         Back to HSK Selection
       </button>
+
     </div>
+
   }
 
 
@@ -30,29 +36,102 @@
 
 
     @if (loading()) {
-      <p>Loading vocabulary...</p>
+
+      <p>
+        Loading vocabulary...
+      </p>
+
     }
 
 
     @if (!loading() && studyWords(); as data) {
 
+      <!-- =====================================================
+           HSK PROGRESS
+           ===================================================== -->
+
+      @if (isAuthenticated()) {
+        <div class="progress-card">
+
+          <div class="progress-header">
+
+            <h2>
+              HSK {{ level }} Progress
+            </h2>
+
+            <span class="progress-percentage">
+              {{ getProgressPercentage() }}%
+            </span>
+
+          </div>
+
+
+          <div
+            class="progress-bar"
+            role="progressbar"
+            [attr.aria-valuenow]="getProgressPercentage()"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-label]="
+              'HSK ' + level + ' study progress'
+            "
+          >
+
+            <div
+              class="progress-bar-fill"
+              [style.width.%]="getProgressPercentage()"
+            ></div>
+
+          </div>
+
+
+          <p class="progress-count">
+
+            {{ getStudiedCount() }}
+            /
+            {{ data.count }}
+            words studied
+
+          </p>
+
+        </div>
+      }
+
+
+      <!-- =====================================================
+           STUDY INFO
+           ===================================================== -->
+
       <div class="study-info">
 
         <p>
-          <strong>{{ data.count }}</strong>
+
+          <strong>
+            {{ data.count }}
+          </strong>
+
           words
+
         </p>
 
+
         <p class="word-range">
+
           Words
+
           {{ (data.page - 1) * data.page_size + 1 }}
+
           -
+
           {{
             (data.page - 1) * data.page_size
             + data.results.length
           }}
+
           of
+
           {{ data.count }}
+
         </p>
 
       </div>
@@ -146,6 +225,7 @@
           Previous
         </button>
 
+
         <button
           type="button"
           [disabled]="data.next_page === null"
@@ -170,6 +250,7 @@
         >
           Start Quiz
         </button>
+
 
         <button
           type="button"
