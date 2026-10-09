@@ -11,89 +11,84 @@
       </a>
 
       <p>
-        A reusable application starter for building
-        modern web applications.
+        Learn Mandarin Chinese through HSK vocabulary,
+        interactive quizzes, flashcards, and practical
+        character recognition exercises.
       </p>
     </div>
 
     <nav
       class="footer-column"
-      aria-labelledby="footer-product"
+      aria-labelledby="footer-learn"
     >
-      <h2 id="footer-product">
-        Product
+      <h2 id="footer-learn">
+        Learn
       </h2>
 
-      <a
-        routerLink="/"
-        fragment="explore"
-      >
-        Explore
+      <a routerLink="/learning">
+        HSK Vocabulary
       </a>
 
-      <a
-        routerLink="/"
-        fragment="pricing"
-      >
-        Pricing
+      <a routerLink="/learning">
+        Study Vocabulary
       </a>
 
-      <a
-        routerLink="/"
-        fragment="features"
-      >
-        Features
+      <a routerLink="/learning">
+        Explore HSK Levels
       </a>
     </nav>
 
     <nav
       class="footer-column"
-      aria-labelledby="footer-company"
+      aria-labelledby="footer-practice"
     >
-      <h2 id="footer-company">
-        Company
+      <h2 id="footer-practice">
+        Practice
       </h2>
 
-      <a routerLink="/">
-        About
+      <a routerLink="/learning">
+        Practice Quizzes
       </a>
 
-      <a routerLink="/">
-        Contact
+      <a routerLink="/learning">
+        Vocabulary Review
       </a>
 
-      <a routerLink="/">
-        Community
+      <a routerLink="/learning">
+        Choose a Quiz Type
       </a>
     </nav>
 
     <nav
       class="footer-column"
-      aria-labelledby="footer-legal"
+      aria-labelledby="footer-resources"
     >
-      <h2 id="footer-legal">
-        Legal
+      <h2 id="footer-resources">
+        Resources
       </h2>
 
       <a
-        routerLink="/"
-        fragment="privacy"
+        href="https://github.com/drkameleon/complete-hsk-vocabulary"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        Privacy
+        HSK Vocabulary Dataset
       </a>
 
       <a
-        routerLink="/"
-        fragment="terms"
+        href="https://github.com/drkameleon/complete-hsk-vocabulary/tree/master/wordlists"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        Terms
+        HSK Word Lists
       </a>
 
       <a
-        routerLink="/"
-        fragment="cookies"
+        href="https://github.com/"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        Cookies
+        GitHub
       </a>
     </nav>
 
@@ -102,25 +97,23 @@
   <div class="footer-bottom">
 
     <p class="copyright">
-      © {{ year() }} {{ brand() }}
+      © {{ year() }} {{ brand() }} • Learn Mandarin Chinese
     </p>
 
     <nav
       class="footer-bottom-navigation"
-      aria-label="Footer legal navigation"
+      aria-label="Footer navigation"
     >
-      <a
-        routerLink="/"
-        fragment="privacy"
-      >
-        Privacy
+      <a routerLink="/">
+        Home
       </a>
 
-      <a
-        routerLink="/"
-        fragment="terms"
-      >
-        Terms
+      <a routerLink="/login">
+        Log In
+      </a>
+
+      <a routerLink="/register">
+        Create Account
       </a>
     </nav>
 

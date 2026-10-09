@@ -8,5 +8,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './minimal-header.css',
 })
 export class MinimalHeader {
-  readonly brand = input('Project App Starter');
+  readonly brand = input('Learn Chinese Mandarin');
 }

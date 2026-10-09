@@ -10,11 +10,13 @@ h1 {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
   line-height: 1.1;
+  text-align: center;
 }
 
 section > p {
   margin: 1rem 0 2rem;
   opacity: 0.75;
+  text-align: center;
 }
 
 .level-grid {
