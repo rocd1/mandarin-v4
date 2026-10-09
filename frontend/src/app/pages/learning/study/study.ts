@@ -14,6 +14,7 @@ import { LearningService } from '../../../core/learning/services/learning.servic
 
 import { AuthStateService } from '../../../core/auth/services/auth-state';
 
+
 import {
   PaginatedStudyWords, 
   UserProgress,
@@ -32,6 +33,17 @@ export class Study implements OnInit {
   private authStateService = inject(AuthStateService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+
+  private readonly authState = inject(AuthStateService);
+
+  protected goHome(): void {
+    const isAuthenticated = this.authState.isAuthenticated;
+
+    this.router.navigate([
+      isAuthenticated ? '/app' : '/',
+    ]);
+  }
+
 
   hskLevel = signal<number | null>(null);
 

@@ -9,6 +9,9 @@ import {
   Router,
 } from '@angular/router';
 
+import { AuthStateService } from '../../../core/auth/services/auth-state';
+
+
 
 @Component({
   selector: 'app-quiz-selection',
@@ -20,6 +23,17 @@ import {
 export class QuizSelection implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+
+  private readonly authState = inject(AuthStateService);
+  
+  protected goHome(): void {
+    const isAuthenticated = this.authState.isAuthenticated;
+  
+    this.router.navigate([
+      isAuthenticated ? '/app' : '/',
+    ]);
+  }
+
 
   hskLevel: number | null = null;
 
@@ -75,4 +89,11 @@ export class QuizSelection implements OnInit {
       this.hskLevel,
     ]);
   }
+
+  backToHskSelection(): void {
+    this.router.navigate([
+      '/learning',
+    ]);
+  }
+
 }

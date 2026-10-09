@@ -19,11 +19,13 @@ section {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
   line-height: 1.1;
+  text-align: center;
 }
 
 .header p {
   margin: 0.75rem 0 0;
   opacity: 0.7;
+  text-align: center;
 }
 
 
@@ -370,4 +372,73 @@ section {
   font-size: 0.9rem;
 
   opacity: 0.65;
+}
+
+
+
+
+/* LEARNING NAVIGATION */
+.learning-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+}
+
+.learning-nav-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  color: #374151;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.learning-nav-button:hover {
+  background-color: #f3f4f6;
+  color: #1d4ed8;
+}
+
+.learning-nav-button.active {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.learning-nav-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .learning-nav {
+    gap: 0.25rem;
+    padding: 0.375rem;
+  }
+
+  .learning-nav-button {
+    gap: 0.3rem;
+    padding: 0.625rem 0.25rem;
+    font-size: 0.85rem;
+  }
 }

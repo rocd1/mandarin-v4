@@ -1,5 +1,6 @@
 <section>
 
+
   @if (error()) {
 
     <div class="error">
@@ -258,6 +259,15 @@
           (click)="backToHskSelection()"
         >
           Back to HSK Selection
+        </button>
+
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="goHome()"
+        >
+          Back to Home
         </button>
 
       </div>

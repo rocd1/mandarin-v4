@@ -2,55 +2,68 @@
   <app-dashboard-header
     [menuOpen]="isMenuOpen()"
     (menuToggle)="toggleMenu()"
-
   />
 
-  @if (isMenuOpen()) {
-    <nav
-      class="menu-panel"
-      aria-label="Secondary navigation"
-    >
-
-      <a routerLink="/app">
-        Dashboard
-      </a>
-
-      <a routerLink="/learning">
-        Study
-      </a>
-
-      <a routerLink="/learning">
-        Quiz
-      </a>
-
-      <div class="menu-divider"></div>
-
-      <a routerLink="/app">
-        Settings
-      </a>
-
-      <a routerLink="/app">
-        Contact Us
-      </a>
-
-      <a routerLink="/app">
-        Community
-      </a>
-
-      <div class="menu-divider"></div>
-
-      <button
-        type="button"
-        (click)="logout()"
+  <div class="app-body">
+    @if (isMenuOpen()) {
+      <nav
+        class="sidebar"
+        aria-label="Main navigation"
       >
-        Logout
-      </button>
+        <a
+          routerLink="/app"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggleMenu()"
+        >
+          Home
+        </a>
 
-    </nav>
-  }
+        <a
+          routerLink="/learning"
+          routerLinkActive="active"
+          (click)="toggleMenu()"
+        >
+          HSK
+        </a>
 
-  <main class="app-main">
-    <router-outlet />
-  </main>
+        <a
+          routerLink="/learning"
+          (click)="toggleMenu()"
+        >
+          Quiz
+        </a>
 
+        <a
+          routerLink="/app/progress"
+          routerLinkActive="active"
+          (click)="toggleMenu()"
+        >
+          Progress
+        </a>
+
+        <a
+          routerLink="/app/profile"
+          routerLinkActive="active"
+          (click)="toggleMenu()"
+        >
+          Profile
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <button
+          type="button"
+          class="logout-button"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </nav>
+    }
+
+    <main class="app-main">
+      <router-outlet />
+    </main>
+  </div>
 </div>
