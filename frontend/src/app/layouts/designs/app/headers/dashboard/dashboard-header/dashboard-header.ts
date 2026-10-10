@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-header',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './dashboard-header.html',
   styleUrl: './dashboard-header.css',
 })

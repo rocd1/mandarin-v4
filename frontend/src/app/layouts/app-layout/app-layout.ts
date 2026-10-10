@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterOutlet, RouterLinkActive } from '@angular/rou
 
 import { DashboardHeader } from '../designs/app/headers/dashboard/dashboard-header/dashboard-header';
 import { AuthService } from '../../core/auth/services/auth.service';
+import { BottomNavigation } from '../designs/app/navigation/bottom/bottom-navigation';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { AuthService } from '../../core/auth/services/auth.service';
     RouterOutlet,
     RouterLinkActive,
     DashboardHeader,
+    BottomNavigation,
   ],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.css',

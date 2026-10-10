@@ -1,173 +1,177 @@
-# Project App Starter
+# Mandarin Learning App
 
-A reusable full-stack starter template built with **Django REST Framework** and **Angular**.
+A Mandarin vocabulary learning app built with Django REST Framework and Angular. The goal is to help learners improve their Chinese vocabulary through HSK-based study and quizzes.
 
-The project provides a secure foundation for building web applications with cookie-based JWT authentication, CSRF protection, protected routes, reusable layouts, and a clean frontend/backend separation.
+## Features
 
-## Stack
+* **HSK vocabulary:** Browse vocabulary organized by HSK level.
+* **Vocabulary study:** Review Chinese characters, pinyin, and English meanings.
+* **Multiple quiz types:**
 
-### Backend
+  * Hanzi to Meaning
+  * Meaning to Hanzi
+  * Hanzi to Pinyin
+  * Pinyin to Hanzi
+* **Guest access:** Study vocabulary and take quizzes without creating an account.
+* **User authentication:** Register, log in, and access protected pages.
+* **Learning progress:** Authenticated users can track correct and incorrect answers.
+* **Responsive interface:** Desktop header and mobile bottom navigation in the authenticated dashboard.
 
-* Django 6
+## Tech Stack
+
+**Backend**
+
+* Python
+* Django
 * Django REST Framework
-* SimpleJWT
-* Cookie-based JWT authentication
-* CSRF protection
-* CORS configuration
+* JWT cookie authentication
+* SQLite for development
 
-### Frontend
+**Frontend**
 
 * Angular
-* Standalone components
 * TypeScript
-* Reactive Forms
-* Angular Router
-* HttpClient
-* Route guards
-* HTTP interceptors
-* Reusable layouts and UI designs
+* HTML and CSS
 
 ## Project Structure
 
 ```text
-project-app-starter/
-├── backend/      # Django + DRF backend
-├── frontend/     # Angular frontend
-├── .gitignore
+mandarin-v4/
+├── backend/
+│   ├── manage.py
+│   ├── config/
+│   └── learning/
+│       └── data/
+│           ├── 1.json
+│           ├── 2.json
+│           ├── ...
+│           └── 7.json
+│
+├── frontend/
+│   ├── src/
+│   ├── angular.json
+│   └── package.json
+│
 └── README.md
 ```
 
-### Backend
+## Getting Started
 
-```text
-backend/
-├── config/       # Django project configuration
-├── accounts/     # Authentication and user functionality
-└── manage.py
-```
+### Requirements
 
-### Frontend
+Install the following before running the project:
 
-```text
-frontend/
-└── src/app/
-    ├── core/     # Application infrastructure
-    ├── layouts/  # Page composition and reusable designs
-    ├── pages/    # Route-level pages
-    └── shared/   # Reusable UI primitives
-```
+* Python
+* Node.js and npm
+* Angular CLI
+* Git (optional)
 
-## Authentication
+### 1. Run the Backend
 
-Authentication uses **JWTs stored in HttpOnly cookies**.
+Open a terminal and navigate to the backend folder.
 
-* Access and refresh tokens are not stored in `localStorage` or `sessionStorage`.
-* CSRF protection is enabled for state-changing requests.
-* Angular automatically sends credentials through the HTTP interceptor.
-* Protected routes use an Angular authentication guard.
-* The backend remains the final authority for authentication and authorization.
-* Refresh-token rotation and blacklisting are supported.
-
-## Running the Project
-
-### Backend
-
-```bash
+```powershell
 cd backend
+```
 
-# Activate virtual environment
-.\venv\Scripts\Activate.ps1
+Activate your Python virtual environment, then install the project dependencies if you have not already done so.
 
-# Run Django
+Run database migrations:
+
+```powershell
+python manage.py migrate
+```
+
+Start the Django development server:
+
+```powershell
 python manage.py runserver
 ```
 
-Backend:
+The backend will normally be available at:
 
-```text
-http://localhost:8000/
+`http://127.0.0.1:8000/`
+
+### 2. Run the Frontend
+
+Open a second terminal:
+
+```powershell
+cd frontend
 ```
 
-### Frontend
+Install dependencies if needed:
 
-Open another terminal:
-
-```bash
-cd frontend
-
-# Install dependencies if needed
+```powershell
 npm install
+```
 
-# Start Angular
+Start the Angular development server:
+
+```powershell
 ng serve
 ```
 
-Frontend:
+The frontend will normally be available at:
 
-```text
-http://localhost:4200/
+`http://localhost:4200/`
+
+### 3. Configure Environment Variables
+
+Before running the application, make sure the backend environment variables are configured using your project's environment template.
+
+Do not commit secret keys, database credentials, or other sensitive values to Git.
+
+## Vocabulary Dataset
+
+The app uses the [Complete HSK Vocabulary dataset](https://github.com/drkameleon/complete-hsk-vocabulary).
+
+The imported vocabulary is organized into HSK levels 1–9 and includes fields such as:
+
+* Simplified and traditional Chinese
+* Pinyin
+* Numeric pinyin
+* English meanings
+* Parts of speech
+* Radicals and other vocabulary information
+
+The current import contains approximately 10,057 vocabulary entries.
+
+If you need to import the dataset into a fresh database, place the required JSON files in the expected data directory and run the project's import command:
+
+```powershell
+python manage.py import_vocabulary
 ```
 
-## Development Flow
+## Application Routes
 
-```text
-Browser
-   │
-   ▼
-Angular
-   │
-   │ HTTP + HttpOnly Cookies
-   ▼
-Django REST API
-   │
-   ▼
-Database
-```
+| Route                                 | Purpose             | Access        |
+| ------------------------------------- | ------------------- | ------------- |
+| `/`                                   | Landing page        | Public        |
+| `/login`                              | Login               | Public        |
+| `/register`                           | Registration        | Public        |
+| `/guest`                              | Guest entry         | Public        |
+| `/learning`                           | HSK selection       | Public        |
+| `/learning/hsk/:level`                | Study vocabulary    | Public        |
+| `/learning/hsk/:level/quiz`           | Quiz type selection | Public        |
+| `/learning/hsk/:level/quiz/:quizType` | Take a quiz         | Public        |
+| `/app`                                | Dashboard           | Authenticated |
 
-The Angular application handles the user interface and client-side application flow, while Django/DRF handles authentication, authorization, validation, business logic, and data access.
+## Authentication and Security
 
-## Documentation
+* JWTs are stored in HTTP-only cookies rather than browser storage.
+* CSRF protection is used for applicable state-changing requests.
+* Protected application routes require authentication.
+* Guest users can use public study and quiz pages.
+* Learning progress is associated with authenticated users.
 
-More detailed documentation is available inside the project:
+## Development Notes
 
-* `frontend/src/app/README.md` — Angular architecture
-* `frontend/src/app/LEARNING-NOTES.md` — Angular beginner notes
-* `frontend/src/app/TERMINAL-COMMANDS.md` — development command reference
+* Run the Django backend and Angular frontend in separate terminals.
+* Keep backend validation authoritative for authentication and quiz answers.
+* Do not log passwords, JWTs, or other sensitive authentication data.
+* Test guest access, login, logout, quiz submissions, and progress updates after making changes.
 
-## Purpose
+## Project Goal
 
-This project is intended to be a **reusable starting point** for future Django + Angular applications.
-
-Application-specific features should be built on top of this starter rather than changing the starter's core security and architecture unnecessarily.
-
-
-### Note:
-
-Delete after each successful new built project
-
-auth-test  
-`E:\django-projects\project-app-starter\frontend\src\app\pages\auth-test`
-
-request-state-test `E:\django-projects\project-app-starter\frontend\src\app\pages\request-state-test`
-
-Notes
-`E:\django-projects\project-app-starter\frontend\notes`
-
-### Runserver
-```
-(venv) PS E:\django-projects\project-app-starter\backend> 
-python manage.py runserver localhost:8000
-```
-
-
-### Structure
-
-```
-project-app-starter/
-├── .gitignore          
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-├── backend/
-└── frontend/
-```
+Build a straightforward and reusable Mandarin vocabulary learning experience that helps learners improve their HSK vocabulary through regular study and practice.

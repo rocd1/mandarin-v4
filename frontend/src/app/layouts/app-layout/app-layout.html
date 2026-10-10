@@ -1,15 +1,19 @@
 <div class="app-layout">
-  <app-dashboard-header
-    [menuOpen]="isMenuOpen()"
-    (menuToggle)="toggleMenu()"
-  />
 
+  <!-- Desktop header -->
+  <div class="desktop-header">
+    <app-dashboard-header
+      [menuOpen]="isMenuOpen()"
+      (menuToggle)="toggleMenu()"
+    />
+  </div>
+
+  <!-- Main content -->
   <div class="app-body">
+
+    <!-- Desktop sidebar, if you want to retain it -->
     @if (isMenuOpen()) {
-      <nav
-        class="sidebar"
-        aria-label="Main navigation"
-      >
+      <nav class="sidebar" aria-label="Main navigation">
         <a
           routerLink="/app"
           routerLinkActive="active"
@@ -34,22 +38,6 @@
           Quiz
         </a>
 
-        <a
-          routerLink="/app/progress"
-          routerLinkActive="active"
-          (click)="toggleMenu()"
-        >
-          Progress
-        </a>
-
-        <a
-          routerLink="/app/profile"
-          routerLinkActive="active"
-          (click)="toggleMenu()"
-        >
-          Profile
-        </a>
-
         <div class="sidebar-divider"></div>
 
         <button
@@ -65,5 +53,12 @@
     <main class="app-main">
       <router-outlet />
     </main>
+
   </div>
+
+  <!-- Mobile bottom navigation -->
+  <div class="mobile-navigation">
+    <app-bottom-navigation />
+  </div>
+
 </div>

@@ -2,32 +2,41 @@
   class="bottom-navigation"
   aria-label="Main navigation"
 >
-  <a routerLink="/app">
+  <!-- Dashboard -->
+  <a
+    routerLink="/app"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
     <span class="navigation-icon">⌂</span>
     <span>Dashboard</span>
   </a>
 
-  <a routerLink="/app">
+  <!-- HSK learning selection -->
+  <a
+    routerLink="/learning"
+    routerLinkActive="active"
+  >
     <span class="navigation-icon">▣</span>
     <span>Learning</span>
   </a>
 
+  <!-- Quiz: open HSK selection first -->
   <a
-    routerLink="/app"
-    class="new-button"
-    aria-label="Create new"
+    routerLink="/learning"
+    routerLinkActive="active"
   >
-    <span class="new-icon">+</span>
-    <span>New</span>
-  </a>
-
-  <a routerLink="/app">
     <span class="navigation-icon">?</span>
     <span>Quiz</span>
   </a>
 
-  <a routerLink="/app">
-    <span class="navigation-icon">♙</span>
-    <span>Profile</span>
-  </a>
+  <!-- Logout -->
+  <button
+    type="button"
+    class="logout-link"
+    (click)="logout()"
+  >
+    <span class="navigation-icon">↪</span>
+    <span>Logout</span>
+  </button>
 </nav>
